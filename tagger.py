@@ -78,39 +78,6 @@ def part1b(file):
         ti_1_ti_probs[ti_1_ti] = ti_1_ti_freqs[ti_1_ti] / ti_1_freqs[prev]
     
 
-# This is fake. Tag an input sentence using weights from 1a*1b
-def part1c(sentence):
-    taggedsentence = ""
-    prev = "...EOS..."
-    for word in sentence.split():
-        taggedsentence += word + "//"
-        maxprob = 0
-        maxtag = ""
-        for key in wt_probs:
-            parts = key.split("//")
-            
-            if parts[0] != word:
-                continue
-
-            for key2 in ti_1_ti_probs:
-                parts2 = key2.split("//")
-
-                if parts2[0] != parts[1]:
-                    continue
-
-                curr_ti_ti1 = parts2[0] + "//" + prev
-
-                if curr_ti_ti1 not in ti_1_ti_probs:
-                    continue
-                
-                if wt_probs[key] * ti_1_ti_probs[key2] > maxprob:
-                    maxprob = wt_probs[key] * ti_1_ti_probs[key2]
-                    maxtag = parts[1]
-
-        taggedsentence += maxtag + " "
-        prev = maxtag
-    
-    return taggedsentence
 
 # Use 1c on multiple sentences from a file
 def part1d(file):
@@ -119,7 +86,7 @@ def part1d(file):
             print(line, otherpart1c(line.strip()))
             
 
-# this is the real part 1c
+# this is the real part 1c. Perform a BFS to find the highest probability path in a sentence tag sequence
 def otherpart1c(sentence):
     graph = []
     for word in sentence.split():
