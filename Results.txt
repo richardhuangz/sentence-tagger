@@ -1,0 +1,107 @@
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+TRA 301 - HW2 - Richard Huang
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1a: I construct dictionaries that map a word-tag pair to the frequency of that word-tag pair, and a tag
+to the frequency of that tag. I used those mappings to construct another map that maps a given word-tag pair
+to its conditioned probability.
+
+1b: Same as in part 1a but using a tag and previous tag pair as keys.
+
+1c, 1d: I wrote something similar to a BFS to find each path from the start to end, and then returned
+the highest-probability path.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+stocks plunged .
+ ...BOS...//NNS//VBD//.//...EOS...
+the big soup can can be opened .
+ ...BOS...//DT//JJ//NN//MD//MD//VB//VBN//.//...EOS...
+the job cut affected many employees .
+ ...BOS...//DT//NN//VBD//VBN//JJ//NNS//.//...EOS...
+the jobs were cut to save the company .
+ ...BOS...//DT//NNS//VBD//VBN//TO//VB//DT//NN//.//...EOS...
+the company decided to cut jobs .
+ ...BOS...//DT//NN//VBD//TO//VB//NNS//.//...EOS...
+the cut method is used in many places .
+ ...BOS...//DT//NN//NN//VBZ//VBN//IN//JJ//NNS//.//...EOS...
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+My code's runtime for this portion is pretty long, at ~3 minutes.
+
+2a: Similar to parts 1a and 1b but using trigrams as keys.
+
+2b: I performed Witten-Bell smoothing by accounting for the following cases: 
+if the whole trigram was seen already, 
+else if only the bigram w_{i-2},w_{i-1} was seen, 
+else if the bigram w_{i-1},w_{i} was seen, 
+else if w_{i-1} was seen, 
+else if w_{i} was seen, 
+and else (if w_{i} was not seen as a unigram).
+I used the formula 1/(Z*(N+T)) for some of these cases where Z = # of unigrams - T, whereas in other cases,
+I had Z = # of unigrams. In other cases, I used the formula frequency(trigram)/(frequency(bigram)+T) or
+frequency(bigram)/(frequency(unigram)+T).
+
+2c: I computed probabilities of sentences by computing the product of Witten-Bell probabilities
+of each trigram in a sentence, where the first trigram was the first three words in the 
+sentence (rather than something like EOS,EOS,word).
+
+2d: I computed perplexities using the formula Pr(sentence)^{-1/n}.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Resumption of the session
+ 17.716386405694863
+I declare resumed the session of the European Parliament adjourned on Friday 17 December 1999 , and I would like once again to wish you a happy new year in the hope that you enjoyed a pleasant festive period .
+ 1176.9856034058441
+Although , as you will have seen , the dreaded 'millennium bug' failed to materialise , still the people in a number of countries suffered a series of natural disasters that truly were dreadful .
+ 870.8419201079886
+You have requested a debate on this subject in the course of the next few days , during this part-session .
+ 347.06780216751713
+In the meantime , I should like to observe a minute' s silence , as a number of Members have requested , on behalf of all the victims concerned , particularly those of the terrible storms , in the various countries of the European Union .
+ 1031.3659951712896
+Please rise , then , for this minute' s silence .
+ 506.3359656196342
+ ( The House rose and observed a minute' s silence ) 
+ 2936.2199666979504
+Madam President , on a point of order .
+ 578.2980099658117
+You will be aware from the press and television that there have been a number of bomb explosions and killings in Sri Lanka .
+ 1762.344611962249
+One of the people assassinated very recently in Sri Lanka was Mr Kumar Ponnambalam , who had visited the European Parliament just a few months ago .
+ 657.1362220896727
+Would it be appropriate for you , Madam President , to write a letter to the Sri Lankan President expressing Parliament's regret at his and the other violent deaths in Sri Lanka and urging her to do everything she possibly can to seek a peaceful reconciliation to a very difficult situation?
+ 4309.340296948041
+Yes , Mr Evans , I feel an initiative of the type you have just suggested would be entirely appropriate .
+ 3044.248012534753
+If the House agrees , I shall do as Mr Evans has suggested .
+ 8088.974590979162
+Madam President , on a point of order .
+ 578.2980099658117
+I would like your advice about Rule 143 concerning inadmissibility .
+ 1396.0877917597575
+My question relates to something that will come up on Thursday and which I will then raise again .
+ 3718.6165653830826
+The Cunha report on multiannual guidance programmes comes before Parliament on Thursday and contains a proposal in paragraph 6 that a form of quota penalties should be introduced for countries which fail to meet their fleet reduction targets annually .
+ 4309.657297405904
+It says that this should be done despite the principle of relative stability .
+ 158.2270293047274
+I believe that the principle of relative stability is a fundamental legal principle of the common fisheries policy and a proposal to subvert it would be legally inadmissible .
+ 1019.3182713355197
+I want to know whether one can raise an objection of that kind to what is merely a report , not a legislative proposal , and whether that is something I can competently do on Thursday .
+ 2394.3283474696577
+That is precisely the time when you may , if you wish , raise this question , i .e . on Thursday prior to the start of the presentation of the report .
+ 286.84105883437684
+Madam President , coinciding with this year' s first part-session of the European Parliament , a date has been set , unfortunately for next Thursday , in Texas in America , for the execution of a young 34 year-old man who has been sentenced to death . We shall call him Mr Hicks .
+ 1311.8482361723154
+At the request of a French Member , Mr Zimeray , a petition has already been presented , which many people signed , including myself .
+ 770.326074387226
+However , I would ask you , in accordance with the line which is now constantly followed by the European Parliament and by the whole of the European Community , to make representations , using the weight of your prestigious office and the institution you represent , to the President and to the Governor of Texas , Mr Bush , who has the power to order a stay of execution and to reprieve the condemned person .
+ 1402.4764500166316
+This is all in accordance with the principles that we have always upheld .
+ 64.16394315917306
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
